@@ -52,13 +52,18 @@ Describe the folder structure of your project. Include details about what each f
 
 project/
 │
-├── routers/ # Express route controllers
-├── models/ # Mongoose models
-├── routes/ # Express routes
-├── middleware/ # Middlewares
-├── .adminjs/ # AdminJS
+├── routers/          # Express route controllers
 │
-└── public/ # Public files (e.g., HTML, CSS, images)
+├── models/           # Mongoose models
+│
+├── routes/           # Express routes
+│
+├── middleware/       # Middlewares
+│
+├── .adminjs/         # AdminJS configuration and files
+│
+└── public/           # Public files (e.g., HTML, CSS, images)
+
 
 
 
