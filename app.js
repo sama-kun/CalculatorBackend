@@ -41,11 +41,7 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "https://bright-flies-wink.loca.lt",
-  })
-);
+app.use(cors());
 
 app.use(flash());
 
