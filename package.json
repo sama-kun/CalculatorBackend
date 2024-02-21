@@ -4,7 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "migrate:down": "migrate-mongo down",
+    "migrate:up": "migrate-mongo up",
+    "migrate:scratch": "npm run migrate:down && npm run migrate:up",
+    "migrate:create": "migrate-mongo create"
   },
   "keywords": [],
   "author": "",
@@ -12,12 +16,16 @@
   "dependencies": {
     "@adminjs/express": "^4.1.0",
     "@adminjs/mongoose": "^2.0.2",
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.17",
     "adminjs": "^5.9.9",
+    "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
@@ -29,5 +37,9 @@
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.20",
     "timezones-list": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/migrate-mongo": "^10.0.4",
+    "migrate-mongo": "^11.0.0"
   }
 }

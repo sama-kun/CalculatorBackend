@@ -10,9 +10,11 @@ const flash = require("connect-flash");
 var session = require("express-session");
 const mongoDbsession = require("connect-mongodb-session")(session);
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 mongoose
   .connect(process.env.DATABASE, {
+    dbName: "calculator", // Specify the name of your database
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -39,6 +41,12 @@ app.use(
   })
 );
 
+app.use(
+  cors({
+    origin: "https://bright-flies-wink.loca.lt",
+  })
+);
+
 app.use(flash());
 
 app.use(bodyParser.json({ limit: "100mb" }));
@@ -62,14 +70,13 @@ app.use("/calculator", calculator);
 // ADMIN BRO
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
-const fee = require("./models/feeModel");
 const country = require("./models/countryModel");
 // We have to tell AdminJS that we will manage mongoose resources with it
 AdminJS.registerAdapter(require("@adminjs/mongoose"));
 // Import all the project's models
 
 const adminJS = new AdminJS({
-  resources: [fee, country],
+  resources: [country],
   rootPath: "/admin",
 });
 // Build and use a router which will handle all AdminJS routes

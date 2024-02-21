@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const FeeType = ["normal", "anomaly", "superordinary"];
 
 // Define the schema for Country
 const countrySchema = new mongoose.Schema({
@@ -11,12 +12,20 @@ const countrySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  fee: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "FeeModel", // Referring to the FeeEntity model
+  basic: {
+    type: Number,
+    default: 0,
+  },
+  first: Number,
+  third: Number,
+  upper: Number,
+  type: {
+    type: String,
+    enum: FeeType, // Specify your enum values
+    default: FeeType[0],
   },
 });
 
-const country = mongoose.model("CountryModel", countrySchema);
+const country = mongoose.model("countries", countrySchema);
 
 module.exports = country;
