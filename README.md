@@ -51,18 +51,13 @@ Explain any configuration options that users might need to modify. Include infor
 Describe the folder structure of your project. Include details about what each folder contains and its purpose.
 
 project/
-│
-├── routers/          # Express route controllers
-│
-├── models/           # Mongoose models
-│
-├── routes/           # Express routes
-│
-├── middleware/       # Middlewares
-│
-├── .adminjs/         # AdminJS configuration and files
-│
-└── public/           # Public files (e.g., HTML, CSS, images)
+├── routers/         # Express route controllers
+├── models/          # Mongoose models
+├── routes/          # Express routes
+├── middleware/      # Middlewares
+├── .adminjs/        # AdminJS configuration and files
+└── public/          # Public files (e.g., HTML, CSS, images)
+
 
 
 
