@@ -55,6 +55,7 @@ project/
 ├── routers/ # Express route controllers
 ├── models/ # Mongoose models
 ├── routes/ # Express routes
+├── middleware/ # Middlewares
 ├── .adminjs/ # AdminJS
 │
 └── public/ # Public files (e.g., HTML, CSS, images)
