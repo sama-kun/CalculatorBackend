@@ -1,0 +1,59 @@
+Arguments: 
+  /opt/homebrew/Cellar/node/20.7.0/bin/node /opt/homebrew/bin/yarn add adminjs @adminjs/express
+
+PATH: 
+  ~/Library/Android/sdk/platform-tools:/Users/alibi/.bin:/opt/homebrew/opt/mongodb-community@4.4/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:~/Library/Android/sdk/platform-tools:/Users/alibi/.bin:/opt/homebrew/opt/mongodb-community@4.4/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/alibi/development/flutter/bin:/Users/alibi/Library/Android/sdk/platform-tools:/Users/alibi/development/flutter/bin:/Users/alibi/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  20.7.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: EACCES: permission denied, mkdir '/Users/alibi/Downloads/codecanyon-AZgEu5FZ-parcelbox-sales-stocks-purchase-billing-with-ultimate-warehouse-inventory-management-system/parcelbox1.1/node_modules/@adminjs/mongoose/node_modules'
+
+npm manifest: 
+  {
+    "name": "parcelbox",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+      "start": "nodemon"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@adminjs/express": "^4.1.0",
+      "@adminjs/mongoose": "^2.0.2",
+      "adminjs": "^5.9.9",
+      "bcryptjs": "^2.4.3",
+      "body-parser": "^1.20.1",
+      "connect-flash": "^0.1.1",
+      "connect-mongodb-session": "^3.1.1",
+      "cookie-parser": "^1.4.6",
+      "dotenv": "^16.0.3",
+      "ejs": "^3.1.8",
+      "express": "^4.18.2",
+      "express-session": "^1.17.3",
+      "jsonwebtoken": "^9.0.0",
+      "mongoose": "^6.12.3",
+      "multer": "^1.4.5-lts.1",
+      "nodemailer": "^6.9.1",
+      "nodemon": "^2.0.20",
+      "pdf-creator-node": "^2.3.5",
+      "pdfkit": "^0.13.0",
+      "timezones-list": "^3.0.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
