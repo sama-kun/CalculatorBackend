@@ -115,7 +115,7 @@ router.post("/", async (req, res) => {
     result.fee = fee;
     result.company = serviceByType[data.typeOfMark];
     result.bank = getBank(fee);
-    result.summa = result.company.sum + result.bank + result.fee;
+    result.summa = result.company.sum + result.bank + result.fee + result.basic;
 
     console.log("Result: ", result);
     res.send(result);
