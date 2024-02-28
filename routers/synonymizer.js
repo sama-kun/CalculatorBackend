@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 async function synonymSearch(word) {
   const browser = await puppeteer.launch({
     executablePath:
-      "../home/apps/.cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
+      "../.cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
     headless: true, // Or false if you want to see the browser window
   });
   const url = process.env.TEXT_URL + word;
@@ -49,7 +49,7 @@ async function synonymSearch(word) {
 async function performSearch(word) {
   const browser = await puppeteer.launch({
     executablePath:
-      "../home/apps/.cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
+      "../.cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
     headless: true, // Or false if you want to see the browser window
   });
   const page = await browser.newPage();
