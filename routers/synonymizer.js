@@ -3,6 +3,7 @@ const app = express();
 const router = express.Router();
 const axios = require("axios");
 const puppeteer = require("puppeteer");
+require("dotenv").config();
 
 router.get("/", async (req, res) => {
   try {
@@ -13,8 +14,11 @@ router.get("/", async (req, res) => {
 });
 
 async function synonymSearch(word) {
-  const url = "https://text.ru/synonym/" + word;
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    executablePath: "/workspace/.cache/puppeteer", // Set the path to Chrome executable
+    headless: true, // Or false if you want to see the browser window
+  });
+  const url = process.env.TEXT_URL + word;
   const page = await browser.newPage();
   await page.goto(url);
 
@@ -42,9 +46,14 @@ async function synonymSearch(word) {
 }
 
 async function performSearch(word) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    executablePath: "/workspace/.cache/puppeteer", // Set the path to Chrome executable
+    headless: true, // Or false if you want to see the browser window
+  });
   const page = await browser.newPage();
-  await page.goto("https://webaccess.wipo.int/mgs/?lang=ru");
+  const url = process.env.WIPO_URL;
+
+  await page.goto(url);
   await page.type("#searchInputBox", word);
   await page.click("#searchButton");
   await page.waitForSelector("#divHitList ul");
