@@ -57,11 +57,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // const index_router = require("./routers/calculator");
 const calculator = require("./routers/calculator");
+const synonymizer = require("./routers/synonymizer");
 // const items_router = require("./routers/items");
 
 // ========== define router =========== //
 
 app.use("/calculator", calculator);
+app.use("/synonymizer", synonymizer);
 
 // ADMIN BRO
 const AdminJS = require("adminjs");
