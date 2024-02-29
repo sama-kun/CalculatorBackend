@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF Report</title>
+</head>
+<body>
+  <h1><%= word %></h1>
+  <% for (let i = 0; i < wipo.length; i++) { %>
+    <p>Класс <%= wipo[i].cls %>:</p>
+    <p><%= wipo[i].text %></p>
+    <br/>
+  <% } %>
+
+  <h2>Синонимы:</h2>
+  <p>
+    <%= synonyms.join(', ') %>
+  </p>
+</body>
+</html>

@@ -3,6 +3,9 @@ const app = express();
 const router = express.Router();
 const axios = require("axios");
 const puppeteer = require("puppeteer");
+const fs = require("fs");
+const ejs = require("ejs");
+const { join, dirname } = require("path");
 require("dotenv").config();
 
 router.get("/", async (req, res) => {
@@ -15,8 +18,8 @@ router.get("/", async (req, res) => {
 
 async function synonymSearch(word) {
   const browser = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
+    // executablePath:
+    //   ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
     headless: true, // Or false if you want to see the browser window
   });
   const url = process.env.TEXT_URL + word;
@@ -48,8 +51,8 @@ async function synonymSearch(word) {
 
 async function performSearch(word) {
   const browser = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
+    // executablePath:
+    //   // ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
     headless: true, // Or false if you want to see the browser window
   });
   const page = await browser.newPage();
@@ -84,7 +87,46 @@ router.get("/:word", async (req, res) => {
     res.json({ word, wipo, synonyms });
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(error);
+  }
+});
+
+router.post("/pdfreport", async (req, res) => {
+  try {
+    // Читаем EJS шаблон
+    const data = req.body;
+    const template = fs.readFileSync(
+      join(__dirname, "..", "templates", "synonym.ejs"),
+      "utf-8"
+    );
+    const nameFile = "test.pdf";
+    console.log(nameFile);
+
+    // Данные для шаблона (можно передать данные из базы данных или других источников)
+
+    // Рендерим EJS шаблон
+    const html = ejs.render(template, data);
+
+    // Создаем браузерное окно с помощью Puppeteer
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    // Устанавливаем контент страницы как HTML
+    await page.setContent(html);
+
+    // Генерируем PDF файл
+    const pdfBuffer = await page.pdf({ format: "A4" });
+
+    // Отправляем PDF файл клиенту
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename="${nameFile}"`);
+    res.send(pdfBuffer);
+
+    // Закрываем браузерное окно
+    await browser.close();
+  } catch (error) {
+    console.error("Ошибка при генерации PDF файла:", error);
+    res.status(500).send("Ошибка сервера");
   }
 });
 
