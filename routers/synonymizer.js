@@ -81,9 +81,20 @@ router.get("/:word", async (req, res) => {
   try {
     const word = req.params.word;
     // Call the function to perform the search
-    const wipo = await performSearch(word);
+    const wipoCls = await performSearch(word);
     const synonyms = await synonymSearch(word);
     // Send the search results as response
+    const groupedData = wipoCls.reduce((acc, obj) => {
+      const { cls, text } = obj;
+      if (!acc[cls]) {
+        acc[cls] = { cls, text: [text] };
+      } else {
+        acc[cls].text.push(text);
+      }
+      return acc;
+    }, {});
+
+    const wipo = Object.values(groupedData);
     res.json({ word, wipo, synonyms });
   } catch (error) {
     console.log(error);
