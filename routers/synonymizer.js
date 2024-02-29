@@ -81,7 +81,6 @@ router.get("/:word", async (req, res) => {
     const wipo = await performSearch(word);
     const synonyms = await synonymSearch(word);
     // Send the search results as response
-    console.log(wipo);
     res.json({ word, wipo, synonyms });
   } catch (error) {
     console.log(error);
