@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const axios = require("axios");
+const puppeteer = require("puppeteer");
 require("dotenv").config();
 
 router.get("/", async (req, res) => {
