@@ -7,7 +7,11 @@
   <h1><%= word %></h1>
   <% for (let i = 0; i < wipo.length; i++) { %>
     <p>Класс <%= wipo[i].cls %>:</p>
-    <p><%= wipo[i].text %></p>
+  <% for (let i = 0; i < wipo.text.length; i++) { %>
+    
+    <p><%= wipo[i].text[i] %></p>
+  <% } %>
+
     <br/>
   <% } %>
 
