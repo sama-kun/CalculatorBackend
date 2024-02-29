@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const axios = require("axios");
-const puppeteer = require("puppeteer");
+const { JSDOM } = require("jsdom");
 require("dotenv").config();
 
 router.get("/", async (req, res) => {
@@ -47,41 +47,78 @@ async function synonymSearch(word) {
 }
 
 async function performSearch(word) {
-  const browser = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
-    headless: true, // Or false if you want to see the browser window
-  });
-  const page = await browser.newPage();
-  const url = process.env.WIPO_URL;
+  try {
+    // Создаем виртуальное окружение браузера с помощью jsdom
+    const dom = await JSDOM.fromURL(process.env.WIPO_URL);
 
-  await page.goto(url);
-  await page.type("#searchInputBox", word);
-  await page.click("#searchButton");
-  await page.waitForSelector("#divHitList ul");
-  const searchResults = await page.evaluate(() => {
+    // Получаем объекты для работы с DOM
+    const document = dom.window.document;
+    const inputElement = document.querySelector("#searchInputBox");
+    const buttonElement = document.querySelector("#searchButton");
+    console.log(inputElement.value, buttonElement);
+
+    // Устанавливаем значение в инпут
+    inputElement.value = word;
+
+    // Имитируем клик по кнопке
+    buttonElement.click();
+
+    // Ждем загрузки результатов поиска
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Пауза в 2 секунды (можно изменить)
+
+    // Обрабатываем результаты поиска
     const resultList = [];
-    const items = document.querySelectorAll("#divHitList ul li");
-    items.forEach((item) => {
-      const cls = item.getAttribute("cls");
-      const classBadge = item.querySelector(".classBadge").innerText;
-      const text = item.innerText.replace(classBadge, "").trim();
+    document.querySelectorAll("#divHitList ul li").forEach((element) => {
+      const cls = element.getAttribute("cls");
+      const classBadge = element.querySelector(".classBadge").textContent;
+      const text = element.textContent.replace(classBadge, "").trim();
+      console.log(text, cls);
       resultList.push({ cls, text });
     });
+
     return resultList;
-  });
-  await browser.close();
-  return searchResults;
+  } catch (error) {
+    console.error("Error occurred during search:", error);
+  }
 }
+
+// async function performSearch(word) {
+//   const browser = await puppeteer.launch({
+//     executablePath:
+//       ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
+//     headless: true, // Or false if you want to see the browser window
+//   });
+//   const page = await browser.newPage();
+//   const url = process.env.WIPO_URL;
+
+//   await page.goto(url);
+//   await page.type("#searchInputBox", word);
+//   await page.click("#searchButton");
+//   await page.waitForSelector("#divHitList ul");
+//   const searchResults = await page.evaluate(() => {
+//     const resultList = [];
+//     const items = document.querySelectorAll("#divHitList ul li");
+//     items.forEach((item) => {
+//       const cls = item.getAttribute("cls");
+//       const classBadge = item.querySelector(".classBadge").innerText;
+//       const text = item.innerText.replace(classBadge, "").trim();
+//       resultList.push({ cls, text });
+//     });
+//     return resultList;
+//   });
+//   await browser.close();
+//   return searchResults;
+// }
 
 router.get("/:word", async (req, res) => {
   try {
     const word = req.params.word;
     // Call the function to perform the search
     const wipo = await performSearch(word);
-    const synonyms = await synonymSearch(word);
+    // const synonyms = await synonymSearch(word);
     // Send the search results as response
-    res.json({ word, wipo, synonyms });
+    console.log(wipo);
+    res.json({ word, wipo });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
