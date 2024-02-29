@@ -9,7 +9,7 @@
     <p>Класс <%= wipo[i].cls %>:</p>
   <% for (let i = 0; i < wipo[i].text.length; i++) { %>
     
-    <p><%= wipo[i].text[i].capitalize(str) %></p>
+    <p><%= wipo[i].text[i].charAt(0).toUpperCase() + wipo[i].text[i].slice(1) %>.</p>
   <% } %>
 
     <br/>
