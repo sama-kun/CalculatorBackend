@@ -64,7 +64,7 @@ async function performSearch(word) {
   await page.waitForSelector("#divHitList ul");
   const searchResults = await page.evaluate(() => {
     const resultList = [];
-    const items = document.querySelectorAll("#divHitList ul li");
+    const items = document.querySelectorAll("#divSearch #divHitList ul li");
     items.forEach((item) => {
       const cls = item.getAttribute("cls");
       const classBadge = item.querySelector(".classBadge").innerText;
