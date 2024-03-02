@@ -16,12 +16,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+let browserInstance; // Переменная для хранения экземпляра браузера
+
 async function getBrowserInstance() {
-  const browserInstance = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
-    headless: true,
-  });
+  if (!browserInstance) {
+    browserInstance = await puppeteer.launch({
+      executablePath:
+        ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+      headless: true,
+    });
+  }
   return browserInstance;
 }
 
