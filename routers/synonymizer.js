@@ -16,12 +16,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-async function synonymSearch(word) {
-  const browser = await puppeteer.launch({
+async function getBrowserInstance() {
+  const browserInstance = await puppeteer.launch({
     executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
-    headless: true, // Or false if you want to see the browser window
+      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    headless: true,
   });
+  return browserInstance;
+}
+
+async function synonymSearch(word) {
+  const browser = await getBrowserInstance();
   const url = process.env.TEXT_URL + word;
   const page = await browser.newPage();
   await page.goto(url);
@@ -42,29 +47,25 @@ async function synonymSearch(word) {
   });
   await browser.close();
 
-  if (searchResults.length > 200) {
-    return searchResults.slice(0, 200);
-  } else {
-    return searchResults;
-  }
+  return searchResults.length > 200
+    ? searchResults.slice(0, 200)
+    : searchResults;
 }
 
 async function performSearch(word) {
-  const browser = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome", // Set the path to Chrome executable
-    headless: true, // Or false if you want to see the browser window
-  });
+  const browser = await getBrowserInstance();
   const page = await browser.newPage();
   const url = process.env.WIPO_URL;
 
   await page.goto(url);
   await page.type("#searchInputBox", word);
   await page.click("#searchButton");
-  await page.waitForSelector("#divSearch #divHitList ul");
+  await page.waitForSelector("#divTermsBrowser #divSearch #divHitList ul");
   const searchResults = await page.evaluate(() => {
     const resultList = [];
-    const items = document.querySelectorAll("#divSearch #divHitList ul li");
+    const items = document.querySelectorAll(
+      "#divTermsBrowser #divSearch #divHitList ul li"
+    );
     items.forEach((item) => {
       const cls = item.getAttribute("cls");
       const classBadge = item.querySelector(".classBadge").innerText;
