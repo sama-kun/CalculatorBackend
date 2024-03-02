@@ -61,7 +61,7 @@ async function performSearch(word) {
   await page.goto(url);
   await page.type("#searchInputBox", word);
   await page.click("#searchButton");
-  await page.waitForSelector("#divHitList ul");
+  await page.waitForSelector("#divSearch #divHitList ul");
   const searchResults = await page.evaluate(() => {
     const resultList = [];
     const items = document.querySelectorAll("#divSearch #divHitList ul li");
