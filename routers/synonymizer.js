@@ -56,10 +56,18 @@ async function performSearch(word) {
   const page = await browser.newPage();
   const url = process.env.WIPO_URL;
 
-  await page.goto(url);
-  await page.type("#searchInputBox", word);
-  await page.click("#searchButton");
-  await page.waitForSelector("#divTermsBrowser #divSearch #divHitList ul");
+  try {
+    await page.goto(url);
+    await page.type("#searchInputBox", word);
+    await page.click("#searchButton");
+    await page.waitForSelector("#divTermsBrowser #divSearch #divHitList ul", {
+      timeout: 5000,
+    }); // Установка таймаута в 5 секунд
+  } catch (error) {
+    console.error("Не удалось найти селектор:", error);
+    await browser.close();
+    return []; // Возвращаем пустой массив в случае ошибки
+  }
   const searchResults = await page.evaluate(() => {
     const resultList = [];
     const items = document.querySelectorAll(
