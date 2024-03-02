@@ -16,21 +16,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-let browserInstance; // Переменная для хранения экземпляра браузера
-
-async function getBrowserInstance() {
-  if (!browserInstance) {
-    browserInstance = await puppeteer.launch({
-      executablePath:
-        ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
-      headless: true,
-    });
-  }
-  return browserInstance;
-}
-
 async function synonymSearch(word) {
-  const browser = await getBrowserInstance();
+  const browser = await puppeteer.launch({
+    executablePath:
+      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    headless: true,
+  });
   const url = process.env.TEXT_URL + word;
   const page = await browser.newPage();
   await page.goto(url);
@@ -57,7 +48,11 @@ async function synonymSearch(word) {
 }
 
 async function performSearch(word) {
-  const browser = await getBrowserInstance();
+  const browser = await puppeteer.launch({
+    executablePath:
+      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    headless: true,
+  });
   const page = await browser.newPage();
   const url = process.env.WIPO_URL;
 
