@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 
 async function synonymSearch(word) {
   const browser = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    // executablePath:
+    //   ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
     headless: true,
   });
   const url = process.env.TEXT_URL + word;
@@ -34,7 +34,7 @@ async function synonymSearch(word) {
       // Получаем текст элемента и удаляем начальные и конечные пробелы
       const text = item.textContent.trim();
       // Проверяем, содержит ли текст только слова или пробелы
-      if (!/^\d+$/.test(text)) {
+      if (!/^\d+$/.test(text) && /^\W+$/.test(text)) {
         if (!(text.length === 0)) resultList.push(text);
       }
     });
@@ -49,8 +49,8 @@ async function synonymSearch(word) {
 
 async function performSearch(word) {
   const browser = await puppeteer.launch({
-    executablePath:
-      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    // executablePath:
+    //   ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
     headless: true,
   });
   const page = await browser.newPage();
