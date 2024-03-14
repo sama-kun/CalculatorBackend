@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 
 async function synonymSearch(word) {
   const browser = await puppeteer.launch({
-    // executablePath:
-    //   ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    executablePath:
+      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
     headless: true,
   });
   const url = process.env.TEXT_URL + word;
@@ -49,8 +49,8 @@ async function synonymSearch(word) {
 
 async function performSearch(word) {
   const browser = await puppeteer.launch({
-    // executablePath:
-    //   ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
+    executablePath:
+      ".cache/puppeteer/chrome/linux-122.0.6261.69/chrome-linux64/chrome",
     headless: true,
   });
   const page = await browser.newPage();
