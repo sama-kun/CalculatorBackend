@@ -7,9 +7,9 @@
   <h1><%= word %></h1>
   <% for (let i = 0; i < wipo.length; i++) { %>
     <p>Класс <%= wipo[i].cls %>:</p>
-  <% for (let i = 0; i < wipo[i].text.length; i++) { %>
+  <% for (let j = 0; j < wipo[j].text.length; j++) { %>
     
-    <p><%= wipo[i].text[i].charAt(0).toUpperCase() + wipo[i].text[i].slice(1) %>.</p>
+    <p><%= wipo[i].text[j].charAt(0).toUpperCase() + wipo[i].text[j].slice(1) %>.</p>
   <% } %>
 
     <br/>
