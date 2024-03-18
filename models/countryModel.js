@@ -24,6 +24,9 @@ const countrySchema = new mongoose.Schema({
     enum: FeeType, // Specify your enum values
     default: FeeType[0],
   },
+  renewalFirst: Number,
+  renewalThird: Number,
+  renewalUpper: Number,
 });
 
 const country = mongoose.model("countries", countrySchema);
