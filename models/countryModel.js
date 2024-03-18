@@ -27,6 +27,11 @@ const countrySchema = new mongoose.Schema({
   renewalFirst: Number,
   renewalThird: Number,
   renewalUpper: Number,
+  renewalType: {
+    type: String,
+    enum: FeeType, // Specify your enum values
+    default: FeeType[0],
+  },
 });
 
 const country = mongoose.model("countries", countrySchema);
