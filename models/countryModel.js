@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
-const FeeType = ["normal", "anomaly", "superordinary"];
+const FeeType = [
+  "normal",
+  "anomaly",
+  "superordinary",
+  "second",
+  "ordinary",
+  "free",
+];
 
 // Define the schema for Country
 const countrySchema = new mongoose.Schema({
@@ -17,6 +24,7 @@ const countrySchema = new mongoose.Schema({
     default: 0,
   },
   first: Number,
+  second: Number,
   third: Number,
   upper: Number,
   type: {
@@ -25,6 +33,7 @@ const countrySchema = new mongoose.Schema({
     default: FeeType[0],
   },
   renewalFirst: Number,
+  renewalSecond: Number,
   renewalThird: Number,
   renewalUpper: Number,
   renewalType: {
