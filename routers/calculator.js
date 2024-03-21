@@ -3,6 +3,7 @@ const app = express();
 const router = express.Router();
 const auth = require("../middleware/auth");
 const countryModel = require("../models/countryModel");
+const countries = require("../seeds/countries.json");
 const axios = require("axios");
 
 const serviceByType = {
@@ -26,11 +27,21 @@ const serviceByType = {
 
 router.get("/", async (req, res) => {
   try {
-    res.send("Hello world");
+    console.log(countries.ordinary.length);
+    // res.send(countries.countries.length);s
   } catch (error) {
     console.log(error);
   }
 });
+
+// router.get("/", async (req, res) => {
+//   try {
+//     console.log(countries.ordinary.length);
+//     // res.send(countries.countries.length);s
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 const getByCode = async (code) => {
   try {
@@ -43,7 +54,7 @@ const getByCode = async (code) => {
   }
 };
 
-router.post("/test", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const data = req.body;
     const countries = data.countries;
@@ -74,11 +85,11 @@ router.post("/test", async (req, res) => {
     });
 
     let ordinary = {};
+    ordinary.oneFee = 100 * rate;
     ordinary.extraFee = 0;
     if (hasOrdinary && mark > 3) {
       ordinary.extraFee = (mark - 3) * rate * 100;
       ordinary.extraMark = mark - 3;
-      ordinary.extraOneFee = 100 * rate;
     }
 
     ordinary.countries = [];
